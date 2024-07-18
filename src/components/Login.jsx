@@ -31,7 +31,6 @@ const Login = () => {
     if (message) return;
 
     // If the form data is valid, then send the data to the server
-
     if (!isSignInForm) {
       // Sign Up Logic
       createUserWithEmailAndPassword(

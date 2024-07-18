@@ -25,10 +25,10 @@ const Header = () => {
 
   // using useEfcfect because we only want to run this once when the app component loads
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
-        dispatch(
+        dispatch( 
           addUser({
             uid: uid,
             email: email,
@@ -43,6 +43,9 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    // Cleanup
+    return () => unsubscribe();
   }, []);
   return (
     <div className="cursor-pointer absolute px-8 py-2 bg-gradient-to-b from-black z-10 bg w-screen flex justify-between">
@@ -53,7 +56,7 @@ const Header = () => {
       />
       {user && (
         <div className="flex p-2">
-          <img className="h-12 w-12" src={user?.photoURL} alt="icon" />
+          <img className="h-12 w-12 rounded-full" src={user?.photoURL} alt="icon" />
           <button
             className="bg-red-700 font-bold mx-4 px-4"
             onClick={handleSignOut}
